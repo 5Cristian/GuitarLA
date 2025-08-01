@@ -1,30 +1,87 @@
+export default function Header({ cart, incrementQuantity, decrementQuantity, removeFromCart, clearCart }) {
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-function Header({ carrito, eliminarProducto, vaciarCarrito, incrementarCantidad, decrementarCantidad }) {
   return (
-    <header>
-      <h1>🛒 GuitarLA - Carrito de Compras</h1>
-      <div className="carrito">
-        <h2>Carrito</h2>
-        {carrito.length === 0 ? (
-          <p>El carrito está vacío.</p>
-        ) : (
-          <>
-            <ul>
-              {carrito.map((producto) => (
-                <li key={producto.id}>
-                  {producto.nombre} - Cantidad: {producto.cantidad}
-                  <button onClick={() => incrementarCantidad(producto.id)}>+</button>
-                  <button onClick={() => decrementarCantidad(producto.id)}>-</button>
-                  <button onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
-                </li>
-              ))}
-            </ul>
-            <button onClick={vaciarCarrito}>Vaciar Carrito</button>
-          </>
-        )}
+    <header className="py-5 header">
+      <div className="container-xl">
+        <div className="row justify-content-center justify-content-md-between">
+          <div className="col-8 col-md-3">
+            <a href="/">
+              <img className="img-fluid" src="/img/logo.svg" alt="imagen logo" />
+            </a>
+          </div>
+
+          <nav className="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
+            <div className="carrito">
+              <img className="img-fluid" src="/img/carrito.png" alt="imagen carrito" />
+              <div id="carrito" className="bg-white p-3">
+                {cart.length === 0 ? (
+                  <p className="text-center">El carrito está vacío</p>
+                ) : (
+                  <>
+                    <table className="w-100 table">
+                      <thead>
+                        <tr>
+                          <th>Imagen</th>
+                          <th>Nombre</th>
+                          <th>Precio</th>
+                          <th>Cantidad</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cart.map(item => (
+                          <tr key={item.id}>
+                            <td>
+                              <img
+                                className="img-fluid"
+                                src={`/img/${item.image}.jpg`}
+                                alt={`Imagen ${item.name}`}
+                                style={{ maxWidth: '50px' }}
+                              />
+                            </td>
+                            <td>{item.name}</td>
+                            <td className="fw-bold">${item.price}</td>
+                            <td className="d-flex align-items-center gap-2">
+                              <button
+                                className="btn btn-dark"
+                                onClick={() => decrementQuantity(item.id)}
+                              >-</button>
+                              {item.quantity}
+                              <button
+                                className="btn btn-dark"
+                                onClick={() => incrementQuantity(item.id)}
+                              >+</button>
+                            </td>
+                            <td>
+                              <button
+                                className="btn btn-danger"
+                                onClick={() => removeFromCart(item.id)}
+                              >X</button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
+                    <p className="text-end">
+                      Total pagar: <span className="fw-bold">${total}</span>
+                    </p>
+
+                    <button
+                      className="btn btn-dark w-100 mt-3 p-2"
+                      onClick={clearCart}
+                    >
+                      Vaciar Carrito
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </nav>
+        </div>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;

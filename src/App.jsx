@@ -1,76 +1,80 @@
-import { useState } from "react";
-import guitars from "./data/guitars.js";
-import Guitar from "./components/Guitar";
-import Header from "./components/Header";
+import { useState } from 'react'
+import Guitar from "./components/Guitar"
+import Header from "./components/Header"
+import { db } from './data/db'
 
 function App() {
-  const [carrito, setCarrito] = useState([]);
+  const [data] = useState(db)
+  const [cart, setCart] = useState([])
 
-  const agregarAlCarrito = (producto) => {
-    setCarrito((prevCarrito) => {
-      const existe = prevCarrito.find((item) => item.id === producto.id);
-      return existe
-        ? prevCarrito.map((item) =>
-            item.id === producto.id
-              ? { ...item, cantidad: item.cantidad + 1 }
-              : item
-          )
-        : [...prevCarrito, { ...producto, cantidad: 1 }];
-    });
-  };
-
-  const incrementarCantidad = (id) => {
-    setCarrito((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, cantidad: item.cantidad + 1 } : item
+  const addToCart = (product) => {
+    const exists = cart.find(item => item.id === product.id)
+    if (exists) {
+      const updatedCart = cart.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
       )
-    );
-  };
+      setCart(updatedCart)
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }])
+    }
+  }
 
-  const decrementarCantidad = (id) => {
-    setCarrito((prev) =>
-      prev
-        .map((item) =>
-          item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
-        )
-        .filter((item) => item.cantidad > 0)
-    );
-  };
+  const incrementQuantity = (id) => {
+    const updatedCart = cart.map(item =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    )
+    setCart(updatedCart)
+  }
 
-  const eliminarProducto = (id) => {
-    setCarrito((prev) => prev.filter((item) => item.id !== id));
-  };
+  const decrementQuantity = (id) => {
+    const updatedCart = cart.map(item =>
+      item.id === id
+        ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+        : item
+    )
+    setCart(updatedCart)
+  }
 
-  const vaciarCarrito = () => {
-    setCarrito([]);
-  };
+  const removeFromCart = (id) => {
+    const updatedCart = cart.filter(item => item.id !== id)
+    setCart(updatedCart)
+  }
+
+  const clearCart = () => setCart([])
 
   return (
     <>
       <Header
-        carrito={carrito}
-        eliminarProducto={eliminarProducto}
-        vaciarCarrito={vaciarCarrito}
-        incrementarCantidad={incrementarCantidad}
-        decrementarCantidad={decrementarCantidad}
+        cart={cart}
+        incrementQuantity={incrementQuantity}
+        decrementQuantity={decrementQuantity}
+        removeFromCart={removeFromCart}
+        clearCart={clearCart}
       />
 
-      <main className="container mx-auto p-6">
-        <h2 className="text-3xl font-bold text-gray-700 mb-6 text-center">Guitarras Disponibles</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {guitars.map((guitarra) => (
+      <main className="container-xl mt-5">
+        <h2 className="text-center">Nuestra Colección</h2>
+        <div className="row mt-5">
+          {data.map(guitar => (
             <Guitar
-              key={guitarra.id}
-              guitarra={guitarra}
-              agregarAlCarrito={agregarAlCarrito}
+              key={guitar.id}
+              guitar={guitar}
+              addToCart={addToCart}
             />
           ))}
         </div>
       </main>
+
+      <footer className="bg-dark mt-5 py-5">
+        <div className="container-xl">
+          <p className="text-white text-center fs-4 mt-4 m-md-0">
+            GuitarLA - Todos los derechos Reservados
+          </p>
+        </div>
+      </footer>
     </>
-  );
+  )
 }
 
-export default App;
-
+export default App
 

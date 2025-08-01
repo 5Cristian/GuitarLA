@@ -1,12 +1,78 @@
-# React + Vite
+# 🎸 GuitarLA - Tienda de Guitarras con React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación web desarrollada con **React** que simula una tienda de guitarras. El usuario puede navegar por una colección de guitarras, agregarlas a un carrito de compras, modificar cantidades, eliminar productos y vaciar el carrito. Todo el estado se maneja con `useState` y se comparte entre componentes de forma dinámica.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📸 Captura
 
-## Expanding the ESLint configuration
+![Captura del sitio](./public/img/captura.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Funcionalidades
+
+- Visualización de guitarras disponibles
+- Agregar productos al carrito
+- Evita duplicados: incrementa cantidad si ya existe
+- Incrementar y decrementar cantidad por producto
+- Eliminar un producto del carrito
+- Vaciar el carrito por completo
+- Cálculo automático del total a pagar
+
+---
+
+## 🧑‍💻 Tecnologías Usadas
+
+- ⚛️ React
+- 💅 Bootstrap 5
+- 🗃️ useState (manejo de estado)
+- 📦 Vite (para empaquetar)
+- 🖼️ Imágenes locales simuladas
+
+---
+
+## 📂 Estructura del Proyecto
+guitarla-react/
+│
+├── public/
+│ └── img/ (imágenes de guitarras y logo)
+│
+├── src/
+│ ├── components/
+│ │ ├── Guitar.jsx
+│ │ └── Header.jsx
+│ ├── data/
+│ │ └── db.js
+│ ├── App.jsx
+│ └── main.jsx
+│
+├── index.html
+└── package.json
+
+⚙️ Cómo usar este proyecto
+
+1. Clonar el repositorio:
+
+```bash
+git clone https://github.com/5Cristian/GuitarLA.git
+cd GuitarLA
+
+2. Instalar dependencias:
+
+npm install
+
+
+3. Ejecutar servidor de desarrollo:
+
+npm run dev
+
+4. Abrir en el navegador de tu preferencia:
+
+http://localhost:5173
+
+👨‍🏫 Créditos
+Proyecto desarrollado por la clase de Desarrollo Web - UMG 2025.
+
+🪄 Licencia
+MIT - Puedes modificar y usar libremente con fines educativos.
